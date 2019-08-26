@@ -1,0 +1,33 @@
+{
+  "name": "yaml-source-map",
+  "version": "1.0.0",
+  "description": "Resolve source location of Objects parsed from YAML.",
+  "main": "index.js",
+  "peerDependencies": {
+    "yaml": "^1.6.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "yaml": "^1.6.0"
+  },
+  "scripts": {
+    "test": "mocha test.js",
+    "cov": "nyc -r html npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amireh/yaml-source-map.git"
+  },
+  "keywords": [
+    "yaml",
+    "source-map"
+  ],
+  "author": "Ahmad Amireh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amireh/yaml-source-map/issues"
+  },
+  "homepage": "https://github.com/amireh/yaml-source-map#readme"
+}
