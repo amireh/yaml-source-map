@@ -109,6 +109,10 @@ counter-intuitive for humans but is usually not a big deal in practice.
 
 ## Changelog
 
+### 2.1.0
+
+Added support for more YAML types: flow maps and sequences, and aliases.
+
 ### 2.0.0
 
 `lookup()` will now return all location information, not just line. To upgrade,

@@ -1,4 +1,7 @@
-const INDEXABLE_NODES = [ 'DOCUMENT', 'SEQ', 'MAP' ]
+const MAP_NODES = [ 'FLOW_MAP', 'MAP' ]
+const SEQ_NODES = [ 'FLOW_SEQ', 'SEQ' ]
+const INDEXABLE_NODES = [ 'DOCUMENT' ].concat(MAP_NODES).concat(SEQ_NODES)
+
 class YAMLSourceMap {
   constructor() {
     // Map.<Object, { node: YAML.Node, filename: ?String }>
@@ -16,12 +19,18 @@ class YAMLSourceMap {
         document = this.index(node.contents, context)
         break;
 
+      case 'FLOW_SEQ':
       case 'SEQ':
         document = node.items.map(childNode => this.index(childNode, context))
         break;
 
+      case 'FLOW_MAP':
       case 'MAP':
         document = node.items.reduce((acc, pair) => {
+          if (pair.value.type === 'ALIAS') {
+            return Object.assign(acc, this.index(pair.value, context))
+          }
+
           acc[pair.key] = this.index(pair.value, context)
           return acc
         }, {})
@@ -32,6 +41,13 @@ class YAMLSourceMap {
       case 'PLAIN':
       case 'QUOTE_DOUBLE':
       case 'QUOTE_SINGLE':
+        document = node.toJSON()
+        break;
+
+      case 'COMMENT':
+        break;
+
+      case 'ALIAS':
         document = node.toJSON()
         break;
 
@@ -70,14 +86,14 @@ const dig = (path, node) => path.reduce((childNode, cursor) => {
   if (!childNode) {
     return undefined
   }
-  else if (childNode.type === 'MAP') {
+  else if (MAP_NODES.includes(childNode.type)) {
     const pair = childNode.items.find(x => x.key.value === cursor)
 
     if (pair) {
       return pair.value
     }
   }
-  else if (childNode.type === 'SEQ') {
+  else if (SEQ_NODES.includes(childNode.type)) {
     return childNode.items[cursor]
   }
   else {
