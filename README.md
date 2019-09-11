@@ -85,7 +85,14 @@ it empty to resolve the location of the passed value.
 ```javascript
 {
     filename: ?String,
-    line: Number
+    start: {
+      line: Number,
+      col: Number
+    },
+    end: {
+      line: Number,
+      col: Number
+    }
 }
 ```
 
@@ -99,6 +106,13 @@ around it.
 For example, consider the YAML blob from the earlier usage example: the line
 reported for `a` will actually be that for `a.b` -- line 4. This may be
 counter-intuitive for humans but is usually not a big deal in practice.
+
+## Changelog
+
+### 2.0.0
+
+`lookup()` will now return all location information, not just line. To upgrade,
+change all references to `lookup().line` to `lookup().start.line`.
 
 [yaml]: https://github.com/eemeli/yaml
 [yaml-parse]: https://eemeli.org/yaml/#parsing-documents

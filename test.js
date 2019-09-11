@@ -29,18 +29,18 @@ describe('YAMLSourceMap', function() {
     })
 
     it('yields the location of a scalar found at the specified path inside a value', () => {
-      assert.equal(sourceMap.lookup(['foo'], document).line, 3)
+      assert.equal(sourceMap.lookup(['foo'], document).start.line, 3)
       assert.equal(sourceMap.lookup(['foo'], document).filename, 'test.yml')
-      assert.equal(sourceMap.lookup(['bar', 'baz', 'bax'], document).line, 6)
+      assert.equal(sourceMap.lookup(['bar', 'baz', 'bax'], document).start.line, 6)
     })
 
     it('yields the location of the value, given an empty path', () => {
-      assert.equal(sourceMap.lookup([], document).line, 3)
+      assert.equal(sourceMap.lookup([], document).start.line, 3)
     })
 
     it('yields the location of a complex object (Map) found at the specified path inside a value', () => {
-      assert.equal(sourceMap.lookup(['bar'], document).line, 5)
-      assert.equal(sourceMap.lookup(['bar', 'baz'], document).line, 6)
+      assert.equal(sourceMap.lookup(['bar'], document).start.line, 5)
+      assert.equal(sourceMap.lookup(['bar', 'baz'], document).start.line, 6)
 
       assert.deepEqual(
         sourceMap.lookup(['bar', 'baz'], document),
@@ -49,9 +49,9 @@ describe('YAMLSourceMap', function() {
     })
 
     it('yields the location of a complex object (Seq) found at the specified path inside a value', () => {
-      assert.equal(sourceMap.lookup(['arr'], document).line, 8)
-      assert.equal(sourceMap.lookup(['arr', 0], document).line, 8)
-      assert.equal(sourceMap.lookup(['arr', 1], document).line, 10)
+      assert.equal(sourceMap.lookup(['arr'], document).start.line, 8)
+      assert.equal(sourceMap.lookup(['arr', 0], document).start.line, 8)
+      assert.equal(sourceMap.lookup(['arr', 1], document).start.line, 10)
 
       assert.deepEqual(
         sourceMap.lookup(['arr', 0], document),

@@ -94,9 +94,10 @@ const contentsOf = node => (
   node && node.type === 'DOCUMENT' ? node.contents : node
 )
 
-const createLocation = (node, filename) => (node.cstNode ? {
-  filename,
-  line: node.cstNode.rangeAsLinePos.start.line
-} : undefined)
+const createLocation = (node, filename) => node.cstNode ? (
+  Object.assign({ filename, }, node.cstNode.rangeAsLinePos)
+) : (
+  undefined
+)
 
 module.exports = YAMLSourceMap
