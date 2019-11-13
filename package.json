@@ -1,6 +1,6 @@
 {
   "name": "yaml-source-map",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Resolve source location of Objects parsed from YAML.",
   "main": "index.js",
   "peerDependencies": {

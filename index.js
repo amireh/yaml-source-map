@@ -14,6 +14,10 @@ class YAMLSourceMap {
   index(node, context = { filename: null }) {
     let document
 
+    if (node === null) {
+      return null
+    }
+
     switch (node.type) {
       case 'DOCUMENT':
         document = this.index(node.contents, context)
@@ -27,7 +31,7 @@ class YAMLSourceMap {
       case 'FLOW_MAP':
       case 'MAP':
         document = node.items.reduce((acc, pair) => {
-          if (pair.value.type === 'ALIAS') {
+          if (pair.value && pair.value.type === 'ALIAS') {
             return Object.assign(acc, this.index(pair.value, context))
           }
 
